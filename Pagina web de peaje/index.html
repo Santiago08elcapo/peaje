@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Categorías del Peaje</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #resultados {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Categorías del Peaje</h1>
+
+    <div id="botones">
+        <!-- Los botones se crearán dinámicamente con JavaScript -->
+    </div>
+
+    <div id="resultados"></div>
+
+    <script>
+        const categorias = {
+            1: { nombre: "Categoría I", valor: 10600 },
+            2: { nombre: "Categoría II", valor: 11500 },
+            3: { nombre: "Categoría III", valor: 25400 },
+            4: { nombre: "Categoría IV", valor: 33200 },
+            5: { nombre: "Categoría V", valor: 38400 },
+            6: { nombre: "Categoría VI-VII", valor: 38400 }
+        };
+
+        const botonesDiv = document.getElementById("botones");
+        const resultadosDiv = document.getElementById("resultados");
+
+        let totalCategoria = {
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0,
+            6: 0
+        };
+
+        // Crear botones para cada categoría
+        for (const categoriaId in categorias) {
+            const boton = document.createElement("button");
+            boton.textContent = categorias[categoriaId].nombre;
+            boton.addEventListener("click", () => cobrarCategoria(categoriaId));
+            botonesDiv.appendChild(boton);
+        }
+
+        function cobrarCategoria(categoriaId) {
+            const categoria = categorias[categoriaId];
+            const valorCobrar = categoria.valor;
+
+            let dineroRecibido = parseInt(prompt(`El valor a cobrar es ${valorCobrar}. Ingrese el dinero recibido:`));
+
+            if (isNaN(dineroRecibido)) {
+                alert("Valor ingresado no válido. Intente de nuevo.");
+                return;
+            }
+
+            while (dineroRecibido < valorCobrar) {
+                const faltante = valorCobrar - dineroRecibido;
+                const dineroFaltante = parseInt(prompt(`El dinero recibido es insuficiente. Falta ${faltante}. Ingrese el dinero faltante:`));
+
+                if (isNaN(dineroFaltante)) {
+                    alert("Valor ingresado no válido. Intente de nuevo.");
+                    return;
+                }
+
+                dineroRecibido += dineroFaltante;
+            }
+
+            alert("Pago completo. Buen viaje!");
+            totalCategoria[categoriaId] += dineroRecibido;
+            mostrarTotales();
+        }
+
+        function mostrarTotales() {
+            let totalRecibido = 0;
+            let resultadosHTML = "<h2>Total recibido en cada categoría:</h2>";
+
+            for (const categoriaId in categorias) {
+                const total = totalCategoria[categoriaId];
+                resultadosHTML += `<p>${categorias[categoriaId].nombre}: ${total}</p>`;
+                totalRecibido += total;
+            }
+
+            resultadosHTML += `<p>Total recibido: ${totalRecibido}</p>`;
+            resultadosDiv.innerHTML = resultadosHTML;
+        }
+    </script>
+</body>
+</html>

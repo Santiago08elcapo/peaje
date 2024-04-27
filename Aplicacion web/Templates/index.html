@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Toll Booth System</title>
+</head>
+<body>
+    <h1>Categorias del peaje</h1>
+    <form action="/cobrar" method="post">
+        <label for="opc">Elige la categoría a cobrar:</label><br>
+        <select id="opc" name="opc">
+            <option value="1">Categoria I</option>
+            <option value="2">Categoria II</option>
+            <option value="3">Categoria III</option>
+            <option value="4">Categoria IV</option>
+            <option value="5">Categoria V</option>
+            <option value="6">Categoria VI-VII</option>
+        </select><br>
+        <label for="vlr">El dinero recibido es:</label><br>
+        <input type="number" id="vlr" name="vlr" min="0"><br>
+        <input type="submit" value="Cobrar">
+    </form>
+    <h2>Total recibido en cada categoría:</h2>
+    <p>Categoria I: {{ total_categoria_I }}</p>
+    <p>Categoria II: {{ total_categoria_II }}</p>
+    <p>Categoria III: {{ total_categoria_III }}</p>
+    <p>Categoria IV: {{ total_categoria_IV }}</p>
+    <p>Categoria V: {{ total_categoria_V }}</p>
+    <p>Categoria VI-VII: {{ total_categoria_VI_VII }}</p>
+    <h2>Total recibido: {{ total }}</h2>
+</body>
+</html>
